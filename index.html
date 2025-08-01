@@ -1,46 +1,28 @@
-const axios = require('axios');
-
-app.get('/api/auth/discord/callback', async (req, res) => {
-  const code = req.query.code;
-  if (!code) return res.status(400).send("No code provided.");
-
-  try {
-    // Exchange code for access token
-    const params = new URLSearchParams({
-      client_id: "1336420935565185065",
-      client_secret: process.env.DISCORD_CLIENT_SECRET,
-      grant_type: "authorization_code",
-      code,
-      redirect_uri: "https://tuiacademy-production.up.railway.app/api/auth/discord/callback",
-      scope: "identify guilds email"
-    });
-
-    const tokenResponse = await axios.post(
-      "https://discord.com/api/oauth2/token",
-      params,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }
-    );
-
-    const accessToken = tokenResponse.data.access_token;
-
-    // Get user info from Discord
-    const userResponse = await axios.get("https://discord.com/api/users/@me", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    });
-
-    const user = userResponse.data;
-    console.log("✅ Discord user info:", user);
-
-    // Redirect user to your frontend after login
-    res.redirect(`https://progamerzzzz8447.github.io/tui-frontend/?id=${user.id}`);
-  } catch (err) {
-    console.error("❌ Discord OAuth error:", err.message);
-    res.status(500).send("OAuth failed");
-  }
-});
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TUI Crew Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center px-6 text-white font-sans">
+  <div class="glass p-10 rounded-2xl shadow-2xl max-w-xl text-center">
+    <h1 class="text-4xl font-bold mb-6">Welcome to TUI Crew Portal</h1>
+    <p class="text-lg mb-8 text-gray-300">Begin your training journey with verified Discord login.</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1336420935565185065&response_type=code&redirect_uri=https%3A%2F%2Ftuiacademy-production.up.railway.app&scope=identify%20guilds" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition duration-200 inline-block">
+      Login with Discord
+    </a>
+  </div>
+</body>
+</html>
