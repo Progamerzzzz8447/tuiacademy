@@ -6,7 +6,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://your-railway-backend.up.railway.app/me", {
+fetch("https://tuiacademy-production.up.railway.app/me", {
       credentials: "include",
     })
       .then((res) => res.json())
