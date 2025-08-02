@@ -1,12 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-    // Add your Firebase config here
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDQ7SI1Wi5TuXyTINtVUMQ25xXLZaxuocM",
+    authDomain: "tui-academy.firebaseapp.com",
+    projectId: "tui-academy",
+    storageBucket: "tui-academy.firebasestorage.app",
+    messagingSenderId: "1063284122485",
+    appId: "1:1063284122485:web:33a49d0a1a8e06e478693c",
+    measurementId: "G-P92R39V4SB"
 };
 
 // Initialize Firebase
@@ -110,7 +110,7 @@ async function loadCourses() {
 function renderCourses() {
     if (courses.length === 0) {
         adminCoursesList.innerHTML = `
-            <div class="no-courses">
+            <div class="text-center">
                 <p>No courses created yet. Create your first course!</p>
             </div>
         `;
@@ -124,9 +124,9 @@ function renderCourses() {
                 <p>${course.description || 'No description'}</p>
                 <p><strong>Access Role:</strong> ${course.accessRole || 'All roles'}</p>
             </div>
-            <div class="course-actions">
-                <button class="action-btn" onclick="manageModules('${course.id}')">Manage Modules</button>
-                <button class="action-btn" onclick="editCourse('${course.id}')">Edit</button>
+            <div class="item-actions">
+                <button class="action-btn edit" onclick="manageModules('${course.id}')">Manage Modules</button>
+                <button class="action-btn edit" onclick="editCourse('${course.id}')">Edit</button>
                 <button class="action-btn delete" onclick="deleteCourse('${course.id}')">Delete</button>
             </div>
         </div>
@@ -171,7 +171,7 @@ async function loadModules(courseId) {
 function renderModules(modules) {
     if (modules.length === 0) {
         adminModulesList.innerHTML = `
-            <div class="no-modules">
+            <div class="text-center">
                 <p>No modules created yet. Create your first module!</p>
             </div>
         `;
@@ -179,13 +179,13 @@ function renderModules(modules) {
     }
     
     adminModulesList.innerHTML = modules.map(module => `
-        <div class="module-item">
+        <div class="module-item-admin">
             <div class="module-info">
                 <h4>${module.title}</h4>
                 <p>Pass mark: ${module.passMark}% | Questions: ${module.questions?.length || 0}</p>
             </div>
-            <div class="module-actions">
-                <button class="action-btn" onclick="editModule('${module.id}')">Edit</button>
+            <div class="item-actions">
+                <button class="action-btn edit" onclick="editModule('${module.id}')">Edit</button>
                 <button class="action-btn delete" onclick="deleteModule('${module.id}')">Delete</button>
             </div>
         </div>
@@ -388,7 +388,7 @@ function addQuestion(questionData = null, index = null) {
     const questionHTML = `
         <div class="question-item" data-question-id="${questionId}">
             <div class="question-header">
-                <input type="text" class="question-text-input" placeholder="Enter question text" 
+                <input type="text" class="question-text-input form-input" placeholder="Enter question text" 
                        value="${questionData?.question || ''}" required>
                 <button type="button" class="remove-question" onclick="removeQuestion('${questionId}')">Remove</button>
             </div>
@@ -397,7 +397,7 @@ function addQuestion(questionData = null, index = null) {
                     <div class="option-input">
                         <input type="radio" name="${questionId}" value="${optIndex}" 
                                ${questionData?.answerIndex === optIndex ? 'checked' : ''} required>
-                        <input type="text" placeholder="Option ${option}" 
+                        <input type="text" class="form-input" placeholder="Option ${option}" 
                                value="${questionData?.options?.[optIndex] || ''}" required>
                     </div>
                 `).join('')}
