@@ -49,5 +49,16 @@
   <div class="mt-10">
     <a href="index.html" class="text-blue-400 hover:underline">← Back to Home</a>
   </div>
+  <script>
+  const userId = sessionStorage.getItem("discordId");
+  if (!userId) {
+    window.location.href = "index.html";
+  } else {
+    console.log("✅ Logged in as:", userId);
+    // You can display it if wanted:
+    // document.body.insertAdjacentHTML("beforeend", `<p class="text-sm mt-4">User ID: ${userId}</p>`);
+  }
+</script>
+
 </body>
 </html>
