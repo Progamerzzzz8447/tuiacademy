@@ -47,5 +47,22 @@
 </a>
 
   </div>
+
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("id");
+
+  if (userId) {
+    document.body.innerHTML = `
+      <div class="glass p-10 rounded-2xl shadow-2xl max-w-2xl text-center text-white">
+        <h1 class="text-4xl font-bold mb-6">Welcome!</h1>
+        <p class="text-lg mb-4">Your Discord ID is:</p>
+        <p class="text-xl font-mono bg-gray-800 p-2 rounded">${userId}</p>
+        <p class="mt-6 text-sm text-gray-300">Further content coming soon...</p>
+      </div>
+    `;
+  }
+</script>
+
 </body>
 </html>
