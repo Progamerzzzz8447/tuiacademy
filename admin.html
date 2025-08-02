@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUI Academy - Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🔧 Admin Panel</h1>
+                <div class="admin-info">
+                    <span id="adminStatus">Administrator</span>
+                    <button id="backToMainBtn" class="secondary-btn">← Back to Main</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="admin-container">
+                <!-- Course Management -->
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h2>📚 Course Management</h2>
+                        <button id="addCourseBtn" class="primary-btn">+ Add Course</button>
+                    </div>
+                    
+                    <div class="courses-list" id="adminCoursesList">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Loading courses...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module Management -->
+                <div class="admin-section" id="moduleManagement" style="display: none;">
+                    <div class="section-header">
+                        <h2>📖 Module Management - <span id="currentCourseName">Course Name</span></h2>
+                        <button id="addModuleBtn" class="primary-btn">+ Add Module</button>
+                    </div>
+                    
+                    <div class="modules-list" id="adminModulesList">
+                        <!-- Modules will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Course Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="courseModalTitle">Add Course</h2>
+                <button class="close-btn" id="closeCourseModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="courseForm">
+                    <div class="form-group">
+                        <label for="courseName">Course Name</label>
+                        <input type="text" id="courseName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseDescription">Description</label>
+                        <textarea id="courseDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="accessRole">Required Role</label>
+                        <input type="text" id="accessRole" placeholder="e.g., pilot, engineer">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" id="cancelCourseBtn">Cancel</button>
+                        <button type="submit" class="primary-btn">Save Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Module Modal -->
+    <div id="moduleModal" class="modal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h2 id="moduleModalTitle">Add Module</h2>
+                <button class="close-btn" id="closeModuleModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="moduleForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="moduleTitle">Module Title</label>
+                            <input type="text" id="moduleTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="passMark">Pass Mark (%)</label>
+                            <input type="number" id="passMark" min="0" max="100" value="70" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="theoryHTML">Theory Content (HTML)</label>
+                        <textarea id="theoryHTML" rows="10" placeholder="Enter HTML content for theory..."></textarea>
+                    </div>
+                    
+                    <div class="questions-section">
+                        <h3>Quiz Questions</h3>
+                        <div id="questionsContainer">
+                            <!-- Questions will be added here -->
+                        </div>
+                        <button type="button" id="addQuestionBtn" class="secondary-btn">+ Add Question</button>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" id="cancelModuleBtn">Cancel</button>
+                        <button type="submit" class="primary-btn">Save Module</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

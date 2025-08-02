@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUI Academy - Module</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <button id="backBtn" class="back-btn">← Back to Courses</button>
+                <h1 id="moduleTitle">Loading Module...</h1>
+                <div class="progress-indicator">
+                    <span id="progressText">Progress: 0%</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="module-container">
+                <!-- Theory Section -->
+                <div id="theorySection" class="theory-section">
+                    <div class="section-header">
+                        <h2>📚 Theory</h2>
+                        <button id="startQuizBtn" class="primary-btn">Start Quiz</button>
+                    </div>
+                    <div id="theoryContent" class="theory-content">
+                        <div class="loading-spinner">
+                            <div class="spinner"></div>
+                            <p>Loading theory content...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Section -->
+                <div id="quizSection" class="quiz-section" style="display: none;">
+                    <div class="section-header">
+                        <h2>🎯 Quiz</h2>
+                        <div class="quiz-progress">
+                            <span id="questionCounter">Question 1 of 5</span>
+                        </div>
+                    </div>
+                    
+                    <div id="quizContent" class="quiz-content">
+                        <div id="questionContainer" class="question-container">
+                            <!-- Questions will be populated here -->
+                        </div>
+                        
+                        <div class="quiz-navigation">
+                            <button id="prevQuestionBtn" class="nav-btn" disabled>Previous</button>
+                            <button id="nextQuestionBtn" class="nav-btn">Next</button>
+                            <button id="submitQuizBtn" class="primary-btn" style="display: none;">Submit Quiz</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultsSection" class="results-section" style="display: none;">
+                    <div class="results-content">
+                        <div id="resultsIcon" class="results-icon">🎉</div>
+                        <h2 id="resultsTitle">Quiz Complete!</h2>
+                        <p id="resultsMessage">You've completed the quiz.</p>
+                        <div class="results-stats">
+                            <div class="stat">
+                                <span class="stat-label">Score:</span>
+                                <span id="scoreDisplay" class="stat-value">0%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Pass Mark:</span>
+                                <span id="passMarkDisplay" class="stat-value">70%</span>
+                            </div>
+                        </div>
+                        <div class="results-actions">
+                            <button id="retakeBtn" class="secondary-btn">Retake Quiz</button>
+                            <button id="continueBtn" class="primary-btn">Continue to Next Module</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUI Academy - Welcome</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <div class="logo">
+                <h1>🎓 TUI Academy</h1>
+                <p class="subtitle">Master the skies with interactive aviation training</p>
+            </div>
+            
+            <div class="welcome-content">
+                <div class="hero-section">
+                    <h2>Welcome to TUI Academy</h2>
+                    <p>Join thousands of aviation professionals learning through our interactive modules.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <span class="feature-icon">📚</span>
+                            <span>Interactive Theory</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🎯</span>
+                            <span>Progress Tracking</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🏆</span>
+                            <span>Certification</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="login-section">
+                    <button id="discordLogin" class="discord-btn">
+                        <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf1274a259aaad_discord-mark-white.svg" alt="Discord">
+                        Login with Discord
+                    </button>
+                    <p class="login-note">Secure login with your Discord account</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            // Add your Firebase config here
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Discord OAuth configuration
+        const DISCORD_CLIENT_ID = 'YOUR_DISCORD_CLIENT_ID';
+        const REDIRECT_URI = 'https://progamerzzzz8447.github.io/tuiacademy/';
+        const DISCORD_SCOPES = 'identify email';
+
+        // Check if user is returning from OAuth
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
+
+        if (userId) {
+            // User is returning from OAuth, redirect to modules
+            window.location.href = `modules.html?id=${userId}`;
+        }
+
+        // Discord login handler
+        document.getElementById('discordLogin').addEventListener('click', () => {
+            const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${encodeURIComponent(DISCORD_SCOPES)}`;
+            window.location.href = discordAuthUrl;
+        });
+
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginBtn = document.getElementById('discordLogin');
+            loginBtn.addEventListener('click', () => {
+                loginBtn.classList.add('loading');
+                loginBtn.innerHTML = '<div class="spinner"></div> Connecting...';
+            });
+        });
+    </script>
+</body>
+</html>
