@@ -45,19 +45,16 @@
     </a>
   </div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get("id");
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("id");
 
-    if (userId) {
-      const card = document.getElementById("card");
-      card.innerHTML = `
-        <h1 class="text-4xl font-bold mb-6">Welcome!</h1>
-        <p class="text-lg mb-4">Your Discord ID is:</p>
-        <p class="text-xl font-mono bg-gray-800 p-2 rounded">${userId}</p>
-        <p class="mt-6 text-sm text-gray-300">Further content coming soon...</p>
-      `;
-    }
-  </script>
+  if (userId) {
+    // Store ID in session and redirect to modules
+    sessionStorage.setItem("discordId", userId);
+    window.location.href = "modules.html";
+  }
+</script>
+
 </body>
 </html>
