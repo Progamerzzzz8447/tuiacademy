@@ -1,12 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-    // Add your Firebase config here
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDQ7SI1Wi5TuXyTINtVUMQ25xXLZaxuocM",
+    authDomain: "tui-academy.firebaseapp.com",
+    projectId: "tui-academy",
+    storageBucket: "tui-academy.firebasestorage.app",
+    messagingSenderId: "1063284122485",
+    appId: "1:1063284122485:web:33a49d0a1a8e06e478693c",
+    measurementId: "G-P92R39V4SB"
 };
 
 // Initialize Firebase
@@ -17,6 +17,7 @@ const db = firebase.firestore();
 let currentUser = null;
 let courses = [];
 let currentCourse = null;
+let userRoles = [];
 
 // Check if user is admin
 const ADMIN_ID = '1094741743372611744';
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     await loadUser(userId);
+    await loadUserRoles(userId);
     await loadCourses();
     setupEventListeners();
 });
@@ -58,6 +60,7 @@ async function loadUser(userId) {
         
         if (userDoc.exists) {
             currentUser = userDoc.data();
+            currentUser.id = userId;
             username.textContent = currentUser.username || 'User';
         } else {
             // User doesn't exist, redirect to login
@@ -69,6 +72,19 @@ async function loadUser(userId) {
     }
 }
 
+// Load user roles from Discord
+async function loadUserRoles(userId) {
+    try {
+        // This would typically be fetched from your backend
+        // For now, we'll assume the user has access to all courses
+        // In a real implementation, you'd fetch the user's Discord roles
+        userRoles = ['all']; // Placeholder - replace with actual role fetching
+    } catch (error) {
+        console.error('Error loading user roles:', error);
+        userRoles = ['all']; // Fallback to allow access
+    }
+}
+
 // Load all courses
 async function loadCourses() {
     try {
@@ -76,10 +92,14 @@ async function loadCourses() {
         courses = [];
         
         coursesSnapshot.forEach(doc => {
-            courses.push({
-                id: doc.id,
-                ...doc.data()
-            });
+            const courseData = doc.data();
+            // Check if user has access to this course based on role
+            if (hasCourseAccess(courseData)) {
+                courses.push({
+                    id: doc.id,
+                    ...courseData
+                });
+            }
         });
         
         renderCourses();
@@ -89,12 +109,24 @@ async function loadCourses() {
     }
 }
 
+// Check if user has access to a course
+function hasCourseAccess(course) {
+    // If no access role specified, allow all users
+    if (!course.accessRole) {
+        return true;
+    }
+    
+    // Check if user has the required role
+    return userRoles.includes(course.accessRole) || userRoles.includes('all');
+}
+
 // Render courses grid
 function renderCourses() {
     if (courses.length === 0) {
         coursesGrid.innerHTML = `
-            <div class="no-courses">
-                <p>No courses available at the moment.</p>
+            <div class="text-center">
+                <p>No courses available for your role at the moment.</p>
+                <p>Contact your administrator for access to training materials.</p>
             </div>
         `;
         return;
@@ -153,7 +185,7 @@ async function openCourseModal(courseId) {
 function renderModules(modules) {
     if (modules.length === 0) {
         modulesList.innerHTML = `
-            <div class="no-modules">
+            <div class="text-center">
                 <p>No modules available for this course.</p>
             </div>
         `;
@@ -172,8 +204,8 @@ function renderModules(modules) {
                     <p>Pass mark: ${module.passMark}%</p>
                 </div>
                 <div class="module-status">
-                    <span class="status-icon">
-                        ${isCompleted ? '✅' : isLocked ? '🔒' : '📖'}
+                    <span class="status-badge ${isCompleted ? 'completed' : isLocked ? 'locked' : 'available'}">
+                        ${isCompleted ? 'Completed' : isLocked ? 'Locked' : 'Available'}
                     </span>
                 </div>
             </div>
