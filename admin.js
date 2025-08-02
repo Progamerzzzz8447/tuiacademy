@@ -1,1 +1,0 @@
-// placeholder JS for admin panel logic
