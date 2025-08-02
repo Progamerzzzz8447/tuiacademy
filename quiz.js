@@ -1,12 +1,12 @@
 // Firebase configuration
 const firebaseConfig = {
-    // Add your Firebase config here
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDQ7SI1Wi5TuXyTINtVUMQ25xXLZaxuocM",
+    authDomain: "tui-academy.firebaseapp.com",
+    projectId: "tui-academy",
+    storageBucket: "tui-academy.firebasestorage.app",
+    messagingSenderId: "1063284122485",
+    appId: "1:1063284122485:web:33a49d0a1a8e06e478693c",
+    measurementId: "G-P92R39V4SB"
 };
 
 // Initialize Firebase
@@ -43,6 +43,7 @@ const scoreDisplay = document.getElementById('scoreDisplay');
 const passMarkDisplay = document.getElementById('passMarkDisplay');
 const retakeBtn = document.getElementById('retakeBtn');
 const continueBtn = document.getElementById('continueBtn');
+const username = document.getElementById('username');
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', async () => {
@@ -69,6 +70,7 @@ async function loadUser(userId) {
         if (userDoc.exists) {
             currentUser = userDoc.data();
             currentUser.id = userId;
+            username.textContent = currentUser.username || 'User';
         } else {
             window.location.href = 'index.html';
         }
@@ -102,13 +104,31 @@ async function loadModule(courseId, moduleId) {
     }
 }
 
-// Display theory content
+// Display theory content with rich HTML support
 function displayTheory() {
     if (currentModule.theoryHTML) {
-        theoryContent.innerHTML = currentModule.theoryHTML;
+        // Sanitize and display rich HTML content
+        theoryContent.innerHTML = sanitizeHTML(currentModule.theoryHTML);
     } else {
         theoryContent.innerHTML = '<p>No theory content available for this module.</p>';
     }
+}
+
+// Sanitize HTML content for security
+function sanitizeHTML(html) {
+    // Basic HTML sanitization - in production, use a proper sanitizer
+    const allowedTags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'strong', 'em', 'u', 'br', 'img'];
+    const allowedAttributes = ['src', 'alt', 'style'];
+    
+    // Create a temporary div to parse HTML
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    // Remove script tags and other potentially dangerous elements
+    const scripts = temp.querySelectorAll('script, style, link, meta, title');
+    scripts.forEach(script => script.remove());
+    
+    return temp.innerHTML;
 }
 
 // Update progress display
@@ -263,11 +283,11 @@ function displayResults(score, passed) {
     resultsSection.style.display = 'block';
     
     if (passed) {
-        resultsIcon.textContent = '🎉';
+        resultsIcon.textContent = '✓';
         resultsTitle.textContent = 'Congratulations!';
         resultsMessage.textContent = 'You have successfully passed this module.';
     } else {
-        resultsIcon.textContent = '📚';
+        resultsIcon.textContent = '✗';
         resultsTitle.textContent = 'Keep Learning';
         resultsMessage.textContent = 'You need to review the material and try again.';
     }
