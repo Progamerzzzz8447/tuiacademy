@@ -1,64 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TUI Crew Portal – Modules</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TUI Academy - Module Dashboard</title>
+  <link rel="icon" type="image/png" href="careeeersicon.png" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+      background: linear-gradient(to bottom right, #0d3b85, #092a5e);
+      backdrop-filter: blur(6px);
     }
     .glass {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
-    .locked {
-      filter: grayscale(100%) opacity(60%);
+    .module-card {
+      transition: transform 0.2s;
+    }
+    .module-card:hover {
+      transform: scale(1.02);
     }
   </style>
 </head>
-<body class="text-white font-sans min-h-screen flex flex-col items-center px-4 py-10">
-  <h1 class="text-4xl md:text-5xl font-bold mb-6 text-center">Training Modules</h1>
-  <p class="text-gray-300 mb-10 text-center max-w-2xl">Complete modules in order to progress through your training. Locked modules will unlock when prerequisites are complete.</p>
-
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl w-full">
-    <!-- Module 1 - Unlocked -->
-    <div class="glass p-6 rounded-2xl shadow-lg text-center hover:scale-105 transition-transform">
-      <h2 class="text-xl font-semibold mb-2">Module 1: Introduction</h2>
-      <p class="text-gray-300 mb-4">An overview of TUI operations and expectations.</p>
-      <a href="module1.html" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-xl inline-block">Start Module</a>
+<body class="min-h-screen flex flex-col items-center justify-start text-white px-4 py-10 font-sans">
+  <div class="glass p-8 rounded-2xl shadow-2xl w-full max-w-4xl">
+    <h1 class="text-4xl font-bold text-center mb-8">TUI Academy Modules</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <a href="module1.html" class="module-card bg-blue-700 bg-opacity-60 p-6 rounded-xl text-white text-center">
+        <h2 class="text-xl font-semibold mb-2">Module 1: Introduction</h2>
+        <p class="text-sm text-gray-200">Welcome and expectations overview.</p>
+      </a>
+      <a href="module2.html" class="module-card bg-blue-700 bg-opacity-60 p-6 rounded-xl text-white text-center">
+        <h2 class="text-xl font-semibold mb-2">Module 2: Cabin Safety</h2>
+        <p class="text-sm text-gray-200">Fundamentals of cabin operations.</p>
+      </a>
+      <a href="module3.html" class="module-card bg-blue-700 bg-opacity-60 p-6 rounded-xl text-white text-center">
+        <h2 class="text-xl font-semibold mb-2">Module 3: Emergency Protocols</h2>
+        <p class="text-sm text-gray-200">What to do in abnormal scenarios.</p>
+      </a>
+      <!-- Add more modules below this point -->
     </div>
-
-    <!-- Module 2 - Locked -->
-    <div class="glass p-6 rounded-2xl shadow-lg text-center locked">
-      <h2 class="text-xl font-semibold mb-2">Module 2: Procedures</h2>
-      <p class="text-gray-400 mb-4">Detailed ground & airside procedures.</p>
-      <span class="inline-block bg-gray-600 px-4 py-2 rounded-xl">🔒 Locked</span>
-    </div>
-
-    <!-- Module 3 - Locked -->
-    <div class="glass p-6 rounded-2xl shadow-lg text-center locked">
-      <h2 class="text-xl font-semibold mb-2">Module 3: Emergency Training</h2>
-      <p class="text-gray-400 mb-4">How to handle inflight emergencies and more.</p>
-      <span class="inline-block bg-gray-600 px-4 py-2 rounded-xl">🔒 Locked</span>
-    </div>
+    <p class="mt-10 text-center text-sm text-gray-300">
+      Logged in as <span id="user-id">(loading...)</span>
+    </p>
   </div>
 
-  <div class="mt-10">
-    <a href="index.html" class="text-blue-400 hover:underline">← Back to Home</a>
-  </div>
   <script>
-  const userId = sessionStorage.getItem("discordId");
-  if (!userId) {
-    window.location.href = "index.html";
-  } else {
-    console.log("✅ Logged in as:", userId);
-    // You can display it if wanted:
-    // document.body.insertAdjacentHTML("beforeend", `<p class="text-sm mt-4">User ID: ${userId}</p>`);
-  }
-</script>
-
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("id");
+    if (userId) {
+      document.getElementById("user-id").textContent = userId;
+      localStorage.setItem("userId", userId);
+    }
+  </script>
 </body>
 </html>
