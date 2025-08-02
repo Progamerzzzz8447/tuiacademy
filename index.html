@@ -2,42 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TUI Academy</title>
   <link rel="icon" type="image/png" href="careeeersicon.png" />
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
       background: linear-gradient(to bottom right, #0d3b85, #092a5e);
-      color: white;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
     }
-    .btn {
-      padding: 1rem 2rem;
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+    }
+    a.login-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
       background: #0077c8;
-      border: none;
       border-radius: 9999px;
       color: white;
       font-weight: bold;
       text-decoration: none;
-      cursor: pointer;
+      transition: background 0.3s ease;
     }
-    .btn:hover {
+    a.login-btn:hover {
       background: #005fa3;
     }
   </style>
 </head>
-<body>
-  <h1>TUI Academy</h1>
-  <p>Click below to begin your training journey</p>
-  <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1336420935565185065&response_type=code&redirect_uri=https%3A%2F%2Ftui-backend-production.up.railway.app%2Fapi%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds%20email">Login with Discord</a>
+<body class="min-h-screen flex flex-col justify-center items-center px-6 text-white font-sans">
+  <div class="glass p-10 rounded-2xl shadow-2xl max-w-2xl text-center">
+    <h1 class="text-4xl font-bold mb-6">TUI Academy Theory Modules</h1>
+    <p class="text-lg mb-8 text-gray-300">Login using Discord to track your progress and unlock modules.</p>
+    <a class="login-btn" href="https://discord.com/oauth2/authorize?client_id=1336420935565185065&response_type=code&redirect_uri=https%3A%2F%2Ftui-backend-production.up.railway.app%2Fapi%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds%20email">
+      Login with Discord
+    </a>
+  </div>
 </body>
 </html>
