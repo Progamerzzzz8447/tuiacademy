@@ -5,80 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUI Academy - Module</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="page-container">
+        <!-- Header -->
         <header class="header">
-            <div class="header-content">
-                <button id="backBtn" class="back-btn">← Back to Courses</button>
-                <h1 id="moduleTitle">Loading Module...</h1>
-                <div class="progress-indicator">
-                    <span id="progressText">Progress: 0%</span>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <h1>TUI Academy</h1>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name" id="username">Loading...</span>
+                        <button id="backBtn" class="btn btn-secondary">Back to Courses</button>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <main class="main-content">
-            <div class="module-container">
+        <!-- Main Content -->
+        <main class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2 id="moduleTitle">Loading Module...</h2>
+                    <p id="progressText">Progress: 0%</p>
+                </div>
+                
                 <!-- Theory Section -->
-                <div id="theorySection" class="theory-section">
-                    <div class="section-header">
-                        <h2>📚 Theory</h2>
-                        <button id="startQuizBtn" class="primary-btn">Start Quiz</button>
+                <div id="theorySection" class="theory-container">
+                    <div class="theory-header">
+                        <h3>Learning Material</h3>
+                        <p>Review the content below before taking the quiz.</p>
                     </div>
                     <div id="theoryContent" class="theory-content">
-                        <div class="loading-spinner">
-                            <div class="spinner"></div>
-                            <p>Loading theory content...</p>
-                        </div>
+                        <!-- Rich HTML content will be loaded here -->
+                    </div>
+                    <div class="theory-actions">
+                        <button id="startQuizBtn" class="btn btn-primary">Start Quiz</button>
                     </div>
                 </div>
 
                 <!-- Quiz Section -->
-                <div id="quizSection" class="quiz-section" style="display: none;">
-                    <div class="section-header">
-                        <h2>🎯 Quiz</h2>
-                        <div class="quiz-progress">
-                            <span id="questionCounter">Question 1 of 5</span>
-                        </div>
+                <div id="quizSection" class="quiz-container" style="display: none;">
+                    <div class="quiz-header">
+                        <h3>Module Quiz</h3>
+                        <p id="questionCounter">Question 1 of 5</p>
                     </div>
                     
-                    <div id="quizContent" class="quiz-content">
-                        <div id="questionContainer" class="question-container">
-                            <!-- Questions will be populated here -->
+                    <div id="questionContainer" class="question-container">
+                        <!-- Questions will be loaded here -->
+                    </div>
+                    
+                    <div class="quiz-navigation">
+                        <button id="prevQuestionBtn" class="btn btn-secondary">Previous</button>
+                        <div class="quiz-counter">
+                            <span id="questionCounter">Question 1 of 5</span>
                         </div>
-                        
-                        <div class="quiz-navigation">
-                            <button id="prevQuestionBtn" class="nav-btn" disabled>Previous</button>
-                            <button id="nextQuestionBtn" class="nav-btn">Next</button>
-                            <button id="submitQuizBtn" class="primary-btn" style="display: none;">Submit Quiz</button>
-                        </div>
+                        <button id="nextQuestionBtn" class="btn btn-primary">Next</button>
+                        <button id="submitQuizBtn" class="btn btn-success" style="display: none;">Submit Quiz</button>
                     </div>
                 </div>
 
                 <!-- Results Section -->
-                <div id="resultsSection" class="results-section" style="display: none;">
-                    <div class="results-content">
-                        <div id="resultsIcon" class="results-icon">🎉</div>
-                        <h2 id="resultsTitle">Quiz Complete!</h2>
-                        <p id="resultsMessage">You've completed the quiz.</p>
-                        <div class="results-stats">
-                            <div class="stat">
-                                <span class="stat-label">Score:</span>
-                                <span id="scoreDisplay" class="stat-value">0%</span>
-                            </div>
-                            <div class="stat">
-                                <span class="stat-label">Pass Mark:</span>
-                                <span id="passMarkDisplay" class="stat-value">70%</span>
-                            </div>
-                        </div>
-                        <div class="results-actions">
-                            <button id="retakeBtn" class="secondary-btn">Retake Quiz</button>
-                            <button id="continueBtn" class="primary-btn">Continue to Next Module</button>
-                        </div>
+                <div id="resultsSection" class="results-container" style="display: none;">
+                    <div id="resultsIcon" class="results-icon"></div>
+                    <h3 id="resultsTitle">Quiz Results</h3>
+                    <p id="resultsMessage">Your results will appear here.</p>
+                    
+                    <div class="results-stats">
+                        <div class="score-display" id="scoreDisplay">0%</div>
+                        <div class="pass-mark">Pass Mark: <span id="passMarkDisplay">0%</span></div>
+                    </div>
+                    
+                    <div class="results-actions">
+                        <button id="retakeBtn" class="btn btn-secondary">Retake Quiz</button>
+                        <button id="continueBtn" class="btn btn-primary">Continue</button>
                     </div>
                 </div>
             </div>
