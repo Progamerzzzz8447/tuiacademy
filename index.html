@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TUI Academy</title>
+  <link rel="icon" type="image/png" href="careeeersicon.png" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0d3b85, #092a5e);
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .btn {
+      padding: 1rem 2rem;
+      background: #0077c8;
+      border: none;
+      border-radius: 9999px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <h1>TUI Academy</h1>
+  <p>Click below to begin your training journey</p>
+  <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1336420935565185065&response_type=code&redirect_uri=https%3A%2F%2Ftui-backend-production.up.railway.app%2Fapi%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds%20email">Login with Discord</a>
+</body>
+</html>

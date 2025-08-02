@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Modules</title>
+  <meta charset="UTF-8" />
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "tui-academy",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    window.onload = async () => {
+      const snapshot = await db.collection("modules").get();
+      const container = document.getElementById("modules");
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.innerHTML = `<a href="${data.url}">${data.title}</a>`;
+        container.appendChild(div);
+      });
+    };
+  </script>
+</head>
+<body>
+  <h1>Available Modules</h1>
+  <div id="modules"></div>
+</body>
+</html>

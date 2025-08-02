@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Module 1</title>
+</head>
+<body>
+  <h1>Module 1: Introduction</h1>
+  <form id="quizForm">
+    <p>1. What does CRM stand for?</p>
+    <input type="text" name="q1" required /><br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <script>
+    document.getElementById("quizForm").onsubmit = function(e) {
+      e.preventDefault();
+      const answer = e.target.q1.value.toLowerCase();
+      if (answer === "crew resource management") {
+        alert("Correct! Your progress has been recorded.");
+      } else {
+        alert("Incorrect. Please try again.");
+      }
+    };
+  </script>
+</body>
+</html>
