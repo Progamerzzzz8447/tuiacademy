@@ -38,5 +38,17 @@
       Login with Discord
     </a>
   </div>
+
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("id");
+
+  if (userId) {
+    window.location.href = `modules.html?id=${userId}`;
+  }
+</script>
+
+
+  
 </body>
 </html>
