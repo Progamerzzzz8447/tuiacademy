@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TUI Academy Theory Modules</title>
+  <link rel="icon" type="image/png" href="careeeersicon.png" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #0d3b85, #092a5e);
+      backdrop-filter: blur(8px);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(14px);
+    }
+    a.btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: #0077c8;
+      border-radius: 9999px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    a.btn:hover {
+      background: #005fa3;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center px-6 text-white font-sans">
+  <div class="glass p-10 rounded-2xl shadow-2xl max-w-2xl text-center">
+    <h1 class="text-4xl font-bold mb-6">TUI Academy Theory Modules</h1>
+    <div id="content"></div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "dummy", // frontend doesn't need real key here for read-only access
+      authDomain: "dummy",
+      projectId: "tui-academy",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get("id");
+    const contentDiv = document.getElementById("content");
+
+    if (!userId) {
+      contentDiv.innerHTML = `
+        <p class="text-lg text-gray-300 mb-4">Please log in with Discord first.</p>
+        <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1336420935565185065&response_type=code&redirect_uri=https%3A%2F%2Ftui-backend-production.up.railway.app%2Fapi%2Fauth%2Fdiscord%2Fcallback&scope=identify%20guilds%20email">
+          Login with Discord
+        </a>`;
+    } else {
+      db.collection("users").doc(userId).get().then(doc => {
+        if (!doc.exists) {
+          contentDiv.innerHTML = `<p class="text-lg">No progress found for user ID: ${userId}</p>`;
+          return;
+        }
+        const userData = doc.data();
+        const modules = userData.modules || {};
+        const html = Object.entries(modules).map(([modId, data]) => {
+          const status = data.completed ? '✅ Completed' : '❌ Not completed';
+          return `<div class="mb-4">
+            <a class="btn" href="module1.html?user=${userId}&mod=${modId}">${modId}</a>
+            <p class="text-sm text-gray-300 mt-2">Status: ${status}</p>
+          </div>`;
+        }).join('');
+
+        contentDiv.innerHTML = `
+          <p class="mb-4 text-lg">Welcome back, Discord user: <span class="font-mono">${userId}</span></p>
+          <h2 class="text-2xl mb-4">Your Modules:</h2>
+          ${html || '<p>No modules assigned yet.</p>'}`;
+      }).catch(err => {
+        contentDiv.innerHTML = `<p class="text-red-400">Error loading user data: ${err.message}</p>`;
+      });
+    }
+  </script>
+</body>
+</html>
