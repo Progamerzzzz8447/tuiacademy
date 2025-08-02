@@ -1,0 +1,1 @@
+// placeholder JS to fetch module content and handle quiz submission

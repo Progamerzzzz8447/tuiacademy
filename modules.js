@@ -1,0 +1,1 @@
+// placeholder JS to fetch courses from Firebase
